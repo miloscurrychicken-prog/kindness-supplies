@@ -1,0 +1,1006 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Kindness Supplies – Makayla's Care Project</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --blue: #2196e8;
+      --blue-dark: #1a7bc9;
+      --green: #3db86a;
+      --green-dark: #2ea35a;
+      --yellow: #f5c518;
+      --yellow-dark: #e0b010;
+      --navy: #1a2340;
+      --body-bg: #fdf9ee;
+      --card-bg: #ffffff;
+      --muted-bg: #f0ece0;
+      --text: #1a2340;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --radius-lg: 1rem;
+      --radius-xl: 1.25rem;
+      --shadow: 0 2px 16px rgba(0,0,0,0.07);
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--body-bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    /* ── PAGES ── */
+    .page { display: none; }
+    .page.active { display: block; }
+
+    /* ── NAV ── */
+    nav {
+      background: #fff;
+      border-bottom: 1px solid var(--border);
+      padding: 0 2rem;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.06);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-weight: 700;
+      font-size: 1.1rem;
+      color: var(--blue);
+      cursor: pointer;
+      text-decoration: none;
+    }
+    .nav-logo .heart { color: #e8533a; font-size: 1.2rem; }
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 2rem;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: .93rem;
+      font-weight: 500;
+      color: #4b5563;
+      text-decoration: none;
+      cursor: pointer;
+      transition: color .15s;
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--blue); }
+    .btn-donate-nav {
+      background: var(--green);
+      color: #fff;
+      font-weight: 700;
+      font-size: .9rem;
+      padding: .55rem 1.4rem;
+      border-radius: 99px;
+      text-decoration: none;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn-donate-nav:hover { background: var(--green-dark); }
+
+    /* ── HERO ── */
+    .hero {
+      position: relative;
+      min-height: 420px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+    }
+    .hero-bg {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to right, rgba(33,150,232,0.88) 35%, rgba(33,150,232,0.55) 100%),
+                  url('https://images.unsplash.com/photo-1452860606245-08befc0ff44b?w=1600&q=80') center/cover no-repeat;
+    }
+    .hero-content {
+      position: relative;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 4rem 2rem 5rem;
+      width: 100%;
+    }
+    .hero-badge {
+      display: inline-block;
+      background: var(--yellow);
+      color: #3a2800;
+      font-weight: 700;
+      font-size: .82rem;
+      padding: .35rem 1rem;
+      border-radius: 99px;
+      margin-bottom: 1.2rem;
+    }
+    .hero h1 {
+      font-size: clamp(2.4rem, 5vw, 3.4rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 1.2rem;
+      max-width: 580px;
+    }
+    .hero h1 .highlight { color: var(--yellow); }
+    .hero p {
+      color: rgba(255,255,255,.9);
+      font-size: 1rem;
+      max-width: 480px;
+      margin-bottom: 2rem;
+      line-height: 1.7;
+    }
+    .hero-btns { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+    /* ── BUTTONS ── */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .4rem;
+      font-weight: 700;
+      font-size: .92rem;
+      padding: .7rem 1.5rem;
+      border-radius: 99px;
+      text-decoration: none;
+      cursor: pointer;
+      border: none;
+      transition: filter .15s, transform .1s;
+    }
+    .btn:hover { filter: brightness(0.93); transform: translateY(-1px); }
+    .btn-yellow { background: var(--yellow); color: #2a1d00; }
+    .btn-outline-white { background: rgba(255,255,255,.15); color: #fff; border: 1.5px solid rgba(255,255,255,.5); }
+    .btn-green { background: var(--green); color: #fff; }
+    .btn-blue { background: var(--blue); color: #fff; }
+    .btn-white-outline {
+      background: #fff;
+      color: var(--navy);
+      border: 2px solid rgba(255,255,255,.6);
+      font-weight: 700;
+    }
+
+    /* ── STATS ── */
+    .stats-wrap {
+      max-width: 1200px;
+      margin: -2.5rem auto 0;
+      padding: 0 2rem;
+      position: relative;
+      z-index: 10;
+    }
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1rem;
+    }
+    @media(max-width:640px){ .stats-grid { grid-template-columns: repeat(2,1fr); } }
+    .stat-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem 1rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .stat-icon { color: var(--blue); margin-bottom: .5rem; }
+    .stat-value { font-weight: 800; font-size: 1.7rem; color: var(--text); }
+    .stat-label { font-size: .8rem; color: var(--text-muted); margin-top: .15rem; }
+
+    /* ── SECTIONS ── */
+    .section { padding: 5rem 2rem; }
+    .section-cream { background: var(--body-bg); }
+    .section-muted { background: var(--muted-bg); }
+    .section-blue { background: var(--blue); }
+    .section-green { background: var(--green); }
+    .section-yellow { background: var(--yellow); }
+    .container { max-width: 1200px; margin: 0 auto; }
+    .text-center { text-align: center; }
+
+    .eyebrow {
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: .4rem;
+    }
+    h2 {
+      font-size: clamp(1.7rem, 3vw, 2.4rem);
+      font-weight: 800;
+      color: var(--navy);
+      line-height: 1.2;
+      margin-bottom: 1rem;
+    }
+    .section-blue h2, .section-green h2 { color: #fff; }
+    .lead { color: var(--text-muted); line-height: 1.75; }
+
+    /* ── TWO-COL ── */
+    .two-col { display: grid; gap: 3rem; align-items: center; }
+    @media(min-width:768px){ .two-col { grid-template-columns: 1fr 1fr; } }
+
+    /* ── MISSION IMG ── */
+    .rounded-img {
+      border-radius: var(--radius-xl);
+      overflow: hidden;
+      box-shadow: 0 8px 32px rgba(0,0,0,.12);
+    }
+    .rounded-img img { width: 100%; height: auto; display: block; }
+
+    /* link arrow */
+    .link-arrow {
+      color: var(--blue);
+      font-weight: 700;
+      font-size: .92rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: .3rem;
+      cursor: pointer;
+    }
+    .link-arrow:hover { text-decoration: underline; }
+
+    /* ── SUPPLY CARDS ── */
+    .supply-grid {
+      display: grid;
+      grid-template-columns: repeat(6,1fr);
+      gap: 1rem;
+      margin-top: 2.5rem;
+    }
+    @media(max-width:900px){ .supply-grid { grid-template-columns: repeat(3,1fr); } }
+    @media(max-width:480px){ .supply-grid { grid-template-columns: repeat(2,1fr); } }
+    .supply-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem .8rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+      transition: box-shadow .2s;
+    }
+    .supply-card:hover { box-shadow: 0 6px 20px rgba(0,0,0,.1); }
+    .supply-card .s-icon { color: var(--green); margin-bottom: .6rem; }
+    .supply-card p { font-weight: 700; font-size: .85rem; }
+
+    /* ── CTA BANNER ── */
+    .cta-banner {
+      border-radius: var(--radius-xl);
+      padding: 3.5rem 2rem;
+      text-align: center;
+      margin: 2rem auto;
+      max-width: 1200px;
+    }
+    .cta-banner.green { background: var(--green); }
+    .cta-banner.blue { background: var(--blue); }
+    .cta-banner.yellow { background: var(--yellow); }
+    .cta-banner h2 { color: #fff; }
+    .cta-banner.yellow h2 { color: var(--navy); }
+    .cta-banner p { color: rgba(255,255,255,.88); max-width: 520px; margin: 0 auto 1.8rem; line-height: 1.7; }
+    .cta-banner.yellow p { color: rgba(30,20,0,.7); }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--blue);
+      color: rgba(255,255,255,.8);
+      padding: 3rem 2rem 1.5rem;
+    }
+    .footer-grid {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: grid;
+      grid-template-columns: 1.5fr 1fr 1.2fr;
+      gap: 3rem;
+      padding-bottom: 2rem;
+      border-bottom: 1px solid rgba(255,255,255,.2);
+    }
+    @media(max-width:640px){ .footer-grid { grid-template-columns: 1fr; gap: 2rem; } }
+    .footer-logo {
+      display: flex;
+      align-items: center;
+      gap: .5rem;
+      font-weight: 800;
+      font-size: 1.1rem;
+      color: #fff;
+      margin-bottom: .8rem;
+    }
+    .footer-logo .heart { color: var(--yellow); }
+    footer p { font-size: .88rem; line-height: 1.6; }
+    .footer-col h4 { font-size: .95rem; font-weight: 700; color: #fff; margin-bottom: 1rem; }
+    .footer-col ul { list-style: none; }
+    .footer-col ul li { margin-bottom: .6rem; }
+    .footer-col ul li a { color: rgba(255,255,255,.8); text-decoration: none; font-size: .88rem; cursor: pointer; }
+    .footer-col ul li a:hover { color: #fff; text-decoration: underline; }
+    .footer-bottom {
+      max-width: 1200px;
+      margin: 1.2rem auto 0;
+      text-align: center;
+      font-size: .82rem;
+      color: rgba(255,255,255,.6);
+    }
+    .btn-yellow-footer {
+      display: inline-block;
+      background: var(--yellow);
+      color: #2a1d00;
+      font-weight: 700;
+      font-size: .88rem;
+      padding: .6rem 1.3rem;
+      border-radius: 99px;
+      text-decoration: none;
+      cursor: pointer;
+      margin-top: .8rem;
+    }
+
+    /* ── PAGE HERO (inner pages) ── */
+    .page-hero {
+      padding: 4.5rem 2rem;
+      text-align: center;
+    }
+    .page-hero h1 { font-size: clamp(2rem,4vw,3rem); font-weight: 800; color: #fff; margin-bottom: 1rem; }
+    .page-hero p { color: rgba(255,255,255,.88); max-width: 600px; margin: 0 auto; font-size: 1rem; line-height: 1.7; }
+    .page-hero.blue { background: var(--blue); }
+    .page-hero.green { background: var(--green); }
+    .page-hero.yellow { background: var(--yellow); }
+    .page-hero.yellow h1 { color: var(--navy); }
+    .page-hero.yellow p { color: rgba(30,20,0,.7); }
+
+    /* ── HOW TO HELP – ways cards ── */
+    .ways-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; margin-top: .5rem; }
+    @media(max-width:768px){ .ways-grid { grid-template-columns: 1fr; } }
+    .way-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 2.5rem 2rem;
+      text-align: center;
+      box-shadow: var(--shadow);
+    }
+    .way-icon-wrap {
+      width: 56px; height: 56px;
+      background: #e8f5ee;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      margin: 0 auto 1.2rem;
+      color: var(--green);
+    }
+    .way-card h3 { font-weight: 800; font-size: 1.05rem; margin-bottom: .8rem; color: var(--navy); }
+    .way-card p { font-size: .9rem; color: var(--text-muted); line-height: 1.65; margin-bottom: 1.2rem; }
+
+    /* supplies list */
+    .supplies-section { display: grid; gap: 3rem; align-items: center; }
+    @media(min-width:768px){ .supplies-section { grid-template-columns: 1fr 1fr; } }
+    .supplies-list { list-style: none; }
+    .supplies-list li {
+      display: flex; align-items: center; gap: .7rem;
+      padding: .5rem 0;
+      font-size: .95rem;
+      color: var(--text);
+      border-bottom: 1px solid var(--border);
+    }
+    .supplies-list li:last-child { border-bottom: none; }
+    .list-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--green); flex-shrink: 0; }
+
+    /* ── PARTNER PAGE ── */
+    .why-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 1.2rem; }
+    @media(max-width:640px){ .why-grid { grid-template-columns: 1fr; } }
+    .why-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      padding: 1.5rem;
+      display: flex;
+      gap: 1rem;
+      align-items: flex-start;
+      box-shadow: var(--shadow);
+    }
+    .why-icon {
+      width: 44px; height: 44px;
+      background: #e8f0fb;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: var(--blue);
+      flex-shrink: 0;
+    }
+    .why-card h4 { font-weight: 700; font-size: .95rem; margin-bottom: .4rem; color: var(--navy); }
+    .why-card p { font-size: .87rem; color: var(--text-muted); line-height: 1.6; }
+
+    .steps-list { max-width: 480px; margin: 0 auto 2.5rem; }
+    .step-item { display: flex; gap: 1.2rem; align-items: flex-start; margin-bottom: 1.5rem; }
+    .step-num {
+      width: 40px; height: 40px;
+      background: var(--green);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      color: #fff;
+      font-weight: 800;
+      font-size: 1rem;
+      flex-shrink: 0;
+    }
+    .step-item h4 { font-weight: 700; margin-bottom: .2rem; color: var(--navy); }
+    .step-item p { font-size: .9rem; color: var(--text-muted); }
+
+    /* ── DROP-OFF page ── */
+    .location-note {
+      text-align: center;
+      padding: 2rem;
+      font-size: .95rem;
+      color: var(--text-muted);
+    }
+    .location-note a { color: var(--blue); font-weight: 600; text-decoration: none; }
+
+    /* ── CONTACT PAGE ── */
+    .contact-grid { display: grid; gap: 3rem; align-items: start; }
+    @media(min-width:768px){ .contact-grid { grid-template-columns: 1fr 2fr; } }
+    .contact-info h3 { font-weight: 800; font-size: 1.1rem; margin-bottom: 1rem; color: var(--navy); }
+    .contact-info-item { display: flex; align-items: center; gap: .8rem; margin-bottom: 1rem; }
+    .contact-info-item .ci-icon { color: var(--blue); }
+    .contact-info-item span { font-size: .93rem; color: var(--text-muted); }
+    .contact-info-item a { color: var(--text-muted); text-decoration: none; }
+    .contact-info .blue-line { width: 36px; height: 3px; background: var(--blue); border-radius: 2px; margin-bottom: 1rem; }
+
+    .contact-form-card {
+      background: #fff;
+      border: 1px solid var(--border);
+      border-radius: var(--radius-xl);
+      padding: 2rem;
+      box-shadow: var(--shadow);
+    }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1rem; }
+    @media(max-width:480px){ .form-row { grid-template-columns: 1fr; } }
+    .form-group { margin-bottom: 1rem; }
+    .form-group label { display: block; font-weight: 600; font-size: .87rem; margin-bottom: .4rem; color: var(--navy); }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%;
+      background: var(--body-bg);
+      border: 1.5px solid var(--border);
+      border-radius: .6rem;
+      padding: .7rem 1rem;
+      font-size: .92rem;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+      transition: border-color .15s;
+    }
+    .form-group input:focus, .form-group textarea:focus { border-color: var(--blue); }
+    .form-group textarea { resize: vertical; min-height: 130px; }
+    .btn-send {
+      background: var(--green);
+      color: #fff;
+      font-weight: 700;
+      font-size: .95rem;
+      padding: .75rem 1.8rem;
+      border-radius: 99px;
+      border: none;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: .5rem;
+      transition: background .15s;
+    }
+    .btn-send:hover { background: var(--green-dark); }
+
+    /* SVG icons inline helper */
+    .icon { display: inline-block; vertical-align: middle; }
+  </style>
+</head>
+<body>
+
+<!-- ═══════════════ NAV ═══════════════ -->
+<nav>
+  <a class="nav-logo" onclick="showPage('home')">
+    <span class="heart">♥</span> Kindness Supplies
+  </a>
+  <ul class="nav-links">
+    <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
+    <li><a onclick="showPage('how-to-help')" id="nav-how-to-help">How to Help</a></li>
+    <li><a onclick="showPage('drop-off')" id="nav-drop-off">Drop-Off Locations</a></li>
+    <li><a onclick="showPage('partner')" id="nav-partner">Partner With Us</a></li>
+    <li><a onclick="showPage('contact')" id="nav-contact">Contact Us</a></li>
+    <li><a class="btn-donate-nav" onclick="showPage('how-to-help')">Donate Now</a></li>
+  </ul>
+</nav>
+
+<!-- ═══════════════ HOME PAGE ═══════════════ -->
+<div class="page active" id="page-home">
+
+  <!-- Hero -->
+  <section class="hero">
+    <div class="hero-bg"></div>
+    <div class="hero-content">
+      <span class="hero-badge">Makayla's Care Project</span>
+      <h1>Every child deserves the supplies to <span class="highlight">learn &amp; create</span></h1>
+      <p>Kindness Supplies collects school and art supplies — paper, crayons, markers, notebooks and more — and donates them to childcare centers and daycares in need.</p>
+      <div class="hero-btns">
+        <a class="btn btn-yellow" onclick="showPage('how-to-help')">Donate Supplies →</a>
+        <a class="btn btn-outline-white" onclick="showPage('partner')">Partner With Us</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats-wrap">
+    <div class="stats-grid">
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 3a2.828 2.828 0 1 1 4 4L7.5 20.5 2 22l1.5-5.5L17 3z"/></svg>
+        </div>
+        <div class="stat-value">75</div>
+        <div class="stat-label">Supplies Donated</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"/><path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"/></svg>
+        </div>
+        <div class="stat-value">1</div>
+        <div class="stat-label">Centers Served</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        </div>
+        <div class="stat-value">Pending</div>
+        <div class="stat-label">Collaborations</div>
+      </div>
+      <div class="stat-card">
+        <div class="stat-icon">
+          <svg class="icon" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+        </div>
+        <div class="stat-value">20</div>
+        <div class="stat-label">Children Impacted</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Mission -->
+  <section class="section section-cream">
+    <div class="container">
+      <div class="two-col">
+        <div>
+          <div class="eyebrow">OUR MISSION</div>
+          <h2>Sparking creativity, one supply at a time</h2>
+          <p class="lead" style="margin-bottom:1rem;">Many childcare centers and daycares struggle to provide basic school and art supplies. Without crayons, paper, and notebooks, young children miss out on critical learning experiences.</p>
+          <p class="lead" style="margin-bottom:1.5rem;">Kindness Supplies — Makayla's Care Project — bridges that gap by collecting donations from individuals and organizations and delivering them directly to the centers that need them most.</p>
+          <a class="link-arrow" onclick="showPage('how-to-help')">Learn how you can help →</a>
+        </div>
+        <div class="rounded-img">
+          <img src="https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=800&q=80" alt="Children creating art with colorful supplies" />
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- What We Collect -->
+  <section class="section section-muted">
+    <div class="container text-center">
+      <h2>What We Collect</h2>
+      <p class="lead" style="max-width:460px;margin:0 auto;">New or gently used supplies that help children learn, draw, and grow.</p>
+      <div class="supply-grid">
+        <div class="supply-card">
+          <div class="s-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.477-1.128-.29-.29-.471-.688-.471-1.137 0-.926.75-1.676 1.676-1.676h1.977c3.082 0 5.647-2.565 5.647-5.647C22 6.5 17.5 2 12 2z"/></svg></div>
+          <p>Crayons</p>
+        </div>
+        <div class="supply-card">
+          <div class="s-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.477-1.128-.29-.29-.471-.688-.471-1.137 0-.926.75-1.676 1.676-1.676h1.977c3.082 0 5.647-2.565 5.647-5.647C22 6.5 17.5 2 12 2z"/></svg></div>
+          <p>Markers</p>
+        </div>
+        <div class="supply-card">
+          <div class="s-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.477-1.128-.29-.29-.471-.688-.471-1.137 0-.926.75-1.676 1.676-1.676h1.977c3.082 0 5.647-2.565 5.647-5.647C22 6.5 17.5 2 12 2z"/></svg></div>
+          <p>Notebooks</p>
+        </div>
+        <div class="supply-card">
+          <div class="s-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.477-1.128-.29-.29-.471-.688-.471-1.137 0-.926.75-1.676 1.676-1.676h1.977c3.082 0 5.647-2.565 5.647-5.647C22 6.5 17.5 2 12 2z"/></svg></div>
+          <p>Paper</p>
+        </div>
+        <div class="supply-card">
+          <div class="s-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.477-1.128-.29-.29-.471-.688-.471-1.137 0-.926.75-1.676 1.676-1.676h1.977c3.082 0 5.647-2.565 5.647-5.647C22 6.5 17.5 2 12 2z"/></svg></div>
+          <p>Pencils &amp; Pens</p>
+        </div>
+        <div class="supply-card">
+          <div class="s-icon"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="13.5" cy="6.5" r=".5"/><circle cx="17.5" cy="10.5" r=".5"/><circle cx="8.5" cy="7.5" r=".5"/><circle cx="6.5" cy="12.5" r=".5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10c.926 0 1.648-.746 1.648-1.688 0-.437-.18-.835-.477-1.128-.29-.29-.471-.688-.471-1.137 0-.926.75-1.676 1.676-1.676h1.977c3.082 0 5.647-2.565 5.647-5.647C22 6.5 17.5 2 12 2z"/></svg></div>
+          <p>Art Kits</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div style="padding:2rem 2rem 4rem;background:var(--body-bg);">
+    <div class="cta-banner green">
+      <h2>Ready to Make a Difference?</h2>
+      <p>Your donated supplies put crayons in tiny hands and smiles on little faces. Join us today.</p>
+      <a class="btn btn-white-outline" onclick="showPage('how-to-help')">Get Involved →</a>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span class="heart">♥</span> Kindness Supplies</div>
+        <p>Makayla's Care Project — collecting school &amp; art supplies for childcare centers and daycares in need.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('how-to-help')">How to Help</a></li>
+          <li><a onclick="showPage('drop-off')">Drop-Off Locations</a></li>
+          <li><a onclick="showPage('partner')">Partner With Us</a></li>
+          <li><a onclick="showPage('contact')">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get In Touch</h4>
+        <p style="margin-bottom:.8rem;">Have questions or want to help? We'd love to hear from you!</p>
+        <a class="btn-yellow-footer" onclick="showPage('contact')">Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Kindness Supplies — Makayla's Care Project.</div>
+  </footer>
+</div>
+
+<!-- ═══════════════ HOW TO HELP PAGE ═══════════════ -->
+<div class="page" id="page-how-to-help">
+
+  <div class="page-hero blue">
+    <h1>How to Help</h1>
+    <p>There are many ways to support Kindness Supplies. Whether you donate a single box of crayons or organize a community drive, every contribution matters.</p>
+  </div>
+
+  <section class="section section-cream">
+    <div class="container">
+      <div class="ways-grid">
+        <div class="way-card">
+          <div class="way-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 12 20 22 4 22 4 12"/><rect x="2" y="7" width="20" height="5"/><line x1="12" y1="22" x2="12" y2="7"/><path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z"/><path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z"/></svg>
+          </div>
+          <h3>Donate Supplies</h3>
+          <p>Until we get an established drop-off location, please contact us to drop off new or gently used school and art supplies. Every supply counts!</p>
+          <a class="link-arrow" onclick="showPage('drop-off')">Find a Drop-Off Location →</a>
+        </div>
+        <div class="way-card">
+          <div class="way-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg>
+          </div>
+          <h3>Organize a Drive</h3>
+          <p>Rally your school, church, or workplace to collect supplies!</p>
+          <a class="link-arrow" onclick="showPage('contact')">Contact Us to Start →</a>
+        </div>
+        <div class="way-card">
+          <div class="way-icon-wrap">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></svg>
+          </div>
+          <h3>Corporate Partnership</h3>
+          <p>Businesses and organizations can sponsor supply drives or make bulk donations. Let's create lasting impact together.</p>
+          <a class="link-arrow" onclick="showPage('partner')">Become a Partner →</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Supplies We Accept -->
+  <section class="section section-muted">
+    <div class="container">
+      <div class="supplies-section">
+        <div class="rounded-img">
+          <img src="https://images.unsplash.com/photo-1580582932707-520aed937b7b?w=800&q=80" alt="Donation bins full of colorful school supplies" />
+        </div>
+        <div>
+          <h2>Supplies We Accept</h2>
+          <ul class="supplies-list">
+            <li><span class="list-dot"></span>Crayons (8-pack or larger)</li>
+            <li><span class="list-dot"></span>Washable markers</li>
+            <li><span class="list-dot"></span>Colored pencils</li>
+            <li><span class="list-dot"></span>Construction paper</li>
+            <li><span class="list-dot"></span>Notebooks &amp; composition books</li>
+            <li><span class="list-dot"></span>Pencils and erasers</li>
+            <li><span class="list-dot"></span>Child-safe scissors</li>
+            <li><span class="list-dot"></span>Glue sticks</li>
+            <li><span class="list-dot"></span>Watercolor paint sets</li>
+            <li><span class="list-dot"></span>Stickers and stamps</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Yellow CTA -->
+  <div style="padding:2rem 2rem 4rem;background:var(--body-bg);">
+    <div class="cta-banner yellow">
+      <h2 style="color:var(--navy);">Questions About Donating?</h2>
+      <p style="color:rgba(30,20,0,.7);">We're happy to answer any questions and help coordinate your donation.</p>
+      <a class="btn btn-white-outline" onclick="showPage('contact')">Contact Us →</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span class="heart">♥</span> Kindness Supplies</div>
+        <p>Makayla's Care Project — collecting school &amp; art supplies for childcare centers and daycares in need.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('how-to-help')">How to Help</a></li>
+          <li><a onclick="showPage('drop-off')">Drop-Off Locations</a></li>
+          <li><a onclick="showPage('partner')">Partner With Us</a></li>
+          <li><a onclick="showPage('contact')">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get In Touch</h4>
+        <p style="margin-bottom:.8rem;">Have questions or want to help? We'd love to hear from you!</p>
+        <a class="btn-yellow-footer" onclick="showPage('contact')">Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Kindness Supplies — Makayla's Care Project.</div>
+  </footer>
+</div>
+
+<!-- ═══════════════ DROP-OFF PAGE ═══════════════ -->
+<div class="page" id="page-drop-off">
+
+  <div class="page-hero green">
+    <h1>Drop-Off Locations</h1>
+    <p>Bring your donated supplies to any of these convenient locations. Thank you for your generosity!</p>
+  </div>
+
+  <section class="section section-cream">
+    <div class="container text-center">
+      <p class="location-note">Want to become a drop-off location? <a onclick="showPage('contact')">Contact us</a> to learn more.</p>
+      <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius-xl);padding:3rem 2rem;max-width:600px;margin:2rem auto;box-shadow:var(--shadow);text-align:center;">
+        <div style="font-size:3rem;margin-bottom:1rem;">📍</div>
+        <h3 style="font-weight:800;font-size:1.2rem;color:var(--navy);margin-bottom:.5rem;">Drop-Off Location Coming Soon</h3>
+        <p class="lead" style="font-size:.93rem;">We're working on setting up official drop-off points. In the meantime, please <a class="link-arrow" onclick="showPage('contact')">contact us</a> to arrange a drop-off.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pickup CTA -->
+  <div style="padding:0 2rem 4rem;background:var(--body-bg);">
+    <div class="cta-banner blue">
+      <h2>Can't Drop Off? We Can Arrange Pickup!</h2>
+      <p>For larger donations, we'll come to you. Reach out and we'll schedule a convenient time.</p>
+      <a class="btn btn-white-outline" onclick="showPage('contact')">Schedule a Pickup →</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span class="heart">♥</span> Kindness Supplies</div>
+        <p>Makayla's Care Project — collecting school &amp; art supplies for childcare centers and daycares in need.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('how-to-help')">How to Help</a></li>
+          <li><a onclick="showPage('drop-off')">Drop-Off Locations</a></li>
+          <li><a onclick="showPage('partner')">Partner With Us</a></li>
+          <li><a onclick="showPage('contact')">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get In Touch</h4>
+        <p style="margin-bottom:.8rem;">Have questions or want to help? We'd love to hear from you!</p>
+        <a class="btn-yellow-footer" onclick="showPage('contact')">Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Kindness Supplies — Makayla's Care Project.</div>
+  </footer>
+</div>
+
+<!-- ═══════════════ PARTNER PAGE ═══════════════ -->
+<div class="page" id="page-partner">
+
+  <div class="page-hero yellow">
+    <h1>Partner With Us</h1>
+    <p>Whether you're a nonprofit, school, business, or civic organization, together we can ensure every child has the supplies they need to learn and create.</p>
+  </div>
+
+  <!-- Why Partner -->
+  <section class="section section-cream">
+    <div class="container">
+      <h2 class="text-center" style="margin-bottom:2rem;">Why Partner With Kindness Supplies?</h2>
+      <div class="why-grid">
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="3"/></svg>
+          </div>
+          <div>
+            <h4>Aligned Mission</h4>
+            <p>Partner with a project dedicated to early childhood education and creative development.</p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <div>
+            <h4>Community Impact</h4>
+            <p>Your support directly benefits local childcare centers serving hundreds of children.</p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
+          <div>
+            <h4>Trusted Project</h4>
+            <p>Kindness Supplies maintains full transparency in how donations are collected and distributed.</p>
+          </div>
+        </div>
+        <div class="why-card">
+          <div class="why-icon">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 9V5a3 3 0 0 0-3-3l-4 9v11h11.28a2 2 0 0 0 2-1.7l1.38-9a2 2 0 0 0-2-2.3H14z"/><path d="M7 22H4a2 2 0 0 1-2-2v-7a2 2 0 0 1 2-2h3"/></svg>
+          </div>
+          <div>
+            <h4>Flexible Partnership</h4>
+            <p>From one-time drives to ongoing sponsorships, we tailor partnerships to fit your goals.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- How It Works -->
+  <section class="section section-muted">
+    <div class="container text-center">
+      <h2 style="margin-bottom:2.5rem;">How It Works</h2>
+      <div class="steps-list">
+        <div class="step-item">
+          <div class="step-num">1</div>
+          <div style="text-align:left;">
+            <h4>Reach Out</h4>
+            <p>Contact us to discuss your interests and capacity.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">2</div>
+          <div style="text-align:left;">
+            <h4>Plan Together</h4>
+            <p>We'll create a partnership plan that fits your organization.</p>
+          </div>
+        </div>
+        <div class="step-item">
+          <div class="step-num">3</div>
+          <div style="text-align:left;">
+            <h4>Make an Impact</h4>
+            <p>Collect or sponsor supplies and watch them reach children in need.</p>
+          </div>
+        </div>
+      </div>
+      <a class="btn btn-blue" onclick="showPage('contact')">Start a Partnership →</a>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <div style="padding:2rem 2rem 4rem;background:var(--body-bg);">
+    <div class="cta-banner green">
+      <h2>Let's Build Something Beautiful Together</h2>
+      <p>Contact us to explore partnership opportunities and start making a difference.</p>
+      <a class="btn btn-white-outline" onclick="showPage('contact')">Get In Touch →</a>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span class="heart">♥</span> Kindness Supplies</div>
+        <p>Makayla's Care Project — collecting school &amp; art supplies for childcare centers and daycares in need.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('how-to-help')">How to Help</a></li>
+          <li><a onclick="showPage('drop-off')">Drop-Off Locations</a></li>
+          <li><a onclick="showPage('partner')">Partner With Us</a></li>
+          <li><a onclick="showPage('contact')">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get In Touch</h4>
+        <p style="margin-bottom:.8rem;">Have questions or want to help? We'd love to hear from you!</p>
+        <a class="btn-yellow-footer" onclick="showPage('contact')">Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Kindness Supplies — Makayla's Care Project.</div>
+  </footer>
+</div>
+
+<!-- ═══════════════ CONTACT PAGE ═══════════════ -->
+<div class="page" id="page-contact">
+
+  <div class="page-hero blue">
+    <h1>Contact Us</h1>
+    <p>Have a question, want to volunteer, or ready to donate? We'd love to hear from you!</p>
+  </div>
+
+  <section class="section section-cream">
+    <div class="container">
+      <div class="contact-grid">
+        <div class="contact-info">
+          <h3>Get in Touch</h3>
+          <div class="blue-line"></div>
+          <div class="contact-info-item">
+            <span class="ci-icon">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </span>
+            <span>Email<br><a href="mailto:caring@kindnesssupplies.org">caring@kindnesssupplies.org</a></span>
+          </div>
+        </div>
+        <div class="contact-form-card">
+          <div class="form-row">
+            <div class="form-group">
+              <label>Name</label>
+              <input type="text" placeholder="Your name" />
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input type="email" placeholder="you@example.com" />
+            </div>
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <input type="text" placeholder="What is this about?" />
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us how you'd like to help or ask a question..."></textarea>
+          </div>
+          <button class="btn-send">
+            Send Message
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="footer-grid">
+      <div>
+        <div class="footer-logo"><span class="heart">♥</span> Kindness Supplies</div>
+        <p>Makayla's Care Project — collecting school &amp; art supplies for childcare centers and daycares in need.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a onclick="showPage('how-to-help')">How to Help</a></li>
+          <li><a onclick="showPage('drop-off')">Drop-Off Locations</a></li>
+          <li><a onclick="showPage('partner')">Partner With Us</a></li>
+          <li><a onclick="showPage('contact')">Contact Us</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Get In Touch</h4>
+        <p style="margin-bottom:.8rem;">Have questions or want to help? We'd love to hear from you!</p>
+        <a class="btn-yellow-footer" onclick="showPage('contact')">Contact Us</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 Kindness Supplies — Makayla's Care Project.</div>
+  </footer>
+</div>
+
+<script>
+  function showPage(id) {
+    // hide all pages
+    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+    // show target
+    document.getElementById('page-' + id).classList.add('active');
+    // update nav active states
+    document.querySelectorAll('.nav-links a[id^="nav-"]').forEach(a => a.classList.remove('active'));
+    const navEl = document.getElementById('nav-' + id);
+    if (navEl) navEl.classList.add('active');
+    // scroll to top
+    window.scrollTo(0, 0);
+  }
+</script>
+</body>
+</html>
